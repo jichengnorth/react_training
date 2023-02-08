@@ -1,32 +1,45 @@
-import ExpenseItem from "./ExpenseItem";
+import React, { useState } from "react";
 import "./Expense.css";
-import Card from '../UI/Card';
+import Card from "../UI/Card";
+import ExpensesFilter from "../ExpensesFilter/ExpensesFliter";
+import ExpenseList from "./ExpenseList";
 
-const Expenses =(props) => {
+const Expenses = (props) => {
+  const [selectYear, setSelectedYear] = useState("2020");
+
+  const onSelectYearFilterHandler = (yearSelected) => {
+    setSelectedYear(yearSelected);
+  };
+  const filteredExpense = props.items.filter(
+    (expense) => expense.date.getFullYear().toString() === selectYear
+  );
+  console.log("test");
+
   return (
     <Card className="expenses">
+      <ExpensesFilter
+        selectedYear={selectYear}
+        onSelectYearFilter={onSelectYearFilterHandler}
+      ></ExpensesFilter>
+      {/* { filteredExpense.length === 0 ? <p>No expenses</p> : filteredExpense.map((expense) => (
       <ExpenseItem
-        title={props.items[0].title}
-        amount={props.items[0].amount}
-        date={props.items[0].date}
-      ></ExpenseItem>
+        key={expense.id}
+        title={expense.title}
+        amount={expense.amount}
+        date={expense.date}
+      ></ExpenseItem>)) } */}
+
+      {/* {filteredExpense.length === 0 && <p>No expenses</p>}
+      {filteredExpense.length > 0 && filteredExpense.map((expense) => (
       <ExpenseItem
-        title={props.items[1].title}
-        amount={props.items[1].amount}
-        date={props.items[1].date}
-      ></ExpenseItem>
-      <ExpenseItem
-        title={props.items[2].title}
-        amount={props.items[2].amount}
-        date={props.items[2].date}
-      ></ExpenseItem>
-      <ExpenseItem
-        title={props.items[3].title}
-        amount={props.items[3].amount}
-        date={props.items[3].date}
-      ></ExpenseItem>
+        key={expense.id}
+        title={expense.title}
+        amount={expense.amount}
+        date={expense.date}
+      ></ExpenseItem>))} */}
+      <ExpenseList listItem = {filteredExpense}></ExpenseList>
     </Card>
   );
-}
+};
 
 export default Expenses;

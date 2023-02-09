@@ -13,6 +13,7 @@ const NewExpense = (props) => {
     };
 
     props.onAddExpense(expenseDataFull);
+    setShowDialog(false)
   }
 
   const setDialogHandler =()=>{
